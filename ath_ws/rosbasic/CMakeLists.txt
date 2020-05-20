@@ -86,7 +86,7 @@ find_package(catkin REQUIRED COMPONENTS
    actionlib_msgs   
    geometry_msgs   
    moveit_msgs   
-   nav_msgs#  
+   nav_msgs  
    sensor_msgs   
    std_msgs
  )
@@ -191,7 +191,7 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
+# catkin_install_python(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
