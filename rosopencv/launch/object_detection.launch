@@ -1,7 +1,0 @@
-<launch>
-
-	<node pkg="rosopencv" type="obj_detection_publisher.py" name="object_detection_publisher_node" output="screen" required="true" />
-	<node pkg="rosopencv" type="obj_detection_subscriber.py" name="object_detection_subscriber_node" output="screen" required="true" />
-	<node pkg="rosopencv" type="obj_detection_listener.py" name="obj_detection_listener_node" output="screen" required="true" />
-
-</launch>
