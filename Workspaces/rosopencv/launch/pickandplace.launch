@@ -1,0 +1,7 @@
+<launch>
+
+	<node pkg="rosopencv" type="obj_detection_cm.py" name="detected_object_pub_node" output="screen" required="true" />
+	<node pkg="rosopencv" type="ik.py" name="detected_object_sub_node" output="screen" required="true" />
+	<node pkg="rqt_graph" type="rqt_graph" name="rqt_graph_node" output="screen" required="true" />
+
+</launch>
