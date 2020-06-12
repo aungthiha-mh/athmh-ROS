@@ -1,7 +1,0 @@
-<launch>
-
-	<node pkg="rosopencv" type="image_publisher.py" name="image_publisher_node" output="screen" required="true" />
-	<node pkg="rosopencv" type="image_subscriber.py" name="image_subscriber_node" output="screen" required="true" />
-	<node pkg="rqt_graph" type="rqt_graph" name="rqt_graph_node" output="screen" required="true" />
-
-</launch>
