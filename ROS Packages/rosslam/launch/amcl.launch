@@ -15,5 +15,5 @@
   </include>
 
   <!-- Move base -->
-  <include file="$(find rosslam)/launch/includes/move_base.xml"/>f
+  <include file="$(find rosslam)/launch/includes/move_base.xml"/>
 </launch>
