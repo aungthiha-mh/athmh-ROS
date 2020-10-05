@@ -1,0 +1,49 @@
+------------------------------------------Start--------------------------------------
+
+						robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+				(look up the robot description on the ROS parameter server and construct a RobotModel for us to use)
+
+						robot_model::RobotModelPtr kinematic_model;
+							(Shared Pointer to Robot Model)
+
+						robot_state::RobotStatePtr kinematic_state;
+						(Maintains the configuration of the robot using robot model)
+
+						robot_state::JointModelGroup* joint_model_group;
+					  (Represents the robot model for a particular group)
+
+kinematic_model->getModelFrame()                                  >> To get robot's model frame
+kinematic_state->setToDefaultValues()                             >> To set all joints in the state to their default values
+kinematic_model->getJointModelGroup()						      >> To get robot model for a particular group
+joint_model_group->getVariableNames()							  >> To get all the joint names of the robot
+
+________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------Get Joint Values---------------------------------
+
+kinematic_state->copyJointGroupPositions()   					  >> For a given group, copy the position values of the variables that make up the group into another location
+
+_________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------Joint Limits-------------------------------------
+
+kinematic_state->setJointGroupPositions()						 >> Given positions for the variables that make up a group, set those as the new values that correspond to the group
+kinematic_state->satisfiesBounds()								 >> Check whether any joint is outside its joint limits
+kinematic_state->enforceBounds()								 >> Enforce the joint limits for this state
+
+__________________________________________________________________________________________________________________________________________________________________________________________
+
+-------------------------------------Forward Kinematics---------------------------------
+
+kinematic_state->setToRandomPositions()         				>> To Set all joints to random values. Values will be within default bounds
+kinematic_state->getGlobalLinkTransform()						>> To Get transform of global link ( transform contains both traslation and rotation)
+
+						Eigen::Isometry3d& end_effector_state;
+
+end_effector_state.translation()								>> To get translation of the link
+end_effector_state.rotation() 									>> To get rotation of the link
+
+------------------------------------Inverse Kinematics---------------------------------
+
+kinematic_state->setFromIK()								    >> The joint values can be set by computing inverse kinematics
+kinematic_state->getJacobian()	                                >> To compute the Jacobian with reference to a particular point on a given link, for a specified group
