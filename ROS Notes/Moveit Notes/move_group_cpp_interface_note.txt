@@ -1,0 +1,85 @@
+-----------------------------------------Setup Classes---------------------------------------------
+
+						moveit::planning_interface::MoveGroupInterface move_group;
+						moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+
+_______________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------Visualization----------------------------------------------
+
+						moveit_visual_tools::MoveItVisualTools visual_tools("panda_link0");
+
+
+visual_tools.deleteAllMarkers();      						>> Tell Rviz to clear all markers on a particular display
+visual_tools.loadRemoteControl();     						>> An introspection tool that allows users to step through a high level script via buttons and keyboard shortcuts in RViz
+visual_tools.publishText();           						>> Display a marker of a text
+visual_tools.trigger();               						>> To reduce the number of messages being sent to RViz for large visualizations
+
+_________________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------Getting Basic Information---------------------------------------
+
+move_group.getPlanningFrame()         						>> To print the name of the reference frame for this robot
+move_group.getEndEffectorLink()       						>> To print the name of the end-effector link for this group
+move_group.getJointModelGroupNames()  						>> To get a list of all the groups in the robot
+
+___________________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------Planning to a Pose goal-----------------------------------------
+
+						moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+
+
+move_group.setPoseTarget()             						>> To plan for this group to a desired pose for the end effector
+move_group.plan(my_plan)               						>> To call the planner to compute the plan and visualize it. Note that we are just planning, not asking move_group to actually move the robot.
+
+______________________________________________________________________________________________________________________________
+
+--------------------------------------Visualization------------------------------------------------
+
+visual_tools.publishAxisLabeled();							>> To display a marker of a axis with a text label describing it.
+visual_tools.publishText();                             	>> To display a marker of a text
+visual_tools.publishTrajectoryLine();						>> To display a line of the end effector path from a robot trajectory path.
+visual_tools.trigger();										>> To reduce the number of messages being sent to RViz for large visualizations
+visual_tools.prompt();                                  	>> To display the text on terminal prompt and to pay permission for program flow
+
+_______________________________________________________________________________________________________________________________________________________________________________________________________
+
+-------------------------------Planning to a joint-space goal-------------------------------------
+
+						moveit::core::RobotStatePtr current_state = move_group.getCurrentState();
+
+move_group.getCurrentState()                           	   >> To get the current robot’s state. RobotState is the object that contains all the current position/velocity/acceleration data.
+current_state->copyJointGroupPositions();              	   >> To get the current set of joint values for the group.
+move_group.setJointValueTarget();					   	   >> To set the JointValueTarget and use it for future planning requests
+
+________________________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------Planning To Path Constraints-------------------------------------
+
+						moveit_msgs::Constraints test_constraints;
+
+test_constraints.orientation_constraints.push_back(ocm);  >> To set ocm value to test_constriants
+move_group.setPathConstraints();                          >> To pecify a set of path constraints to use
+move_group.setStartState() 								  >> If a different start state should be considered instead of the current state of the robot, this function sets that state.
+move_group.setPlanningTime();                             >> To specify the maximum amount of time to use when planning.
+move_group.clearPathConstraints();   					  >> To specify that no path constraints are to be used.
+
+________________________________________________________________________________________________________________________________________________________________________________________________________
+
+--------------------------------Planning To Cartesian Path----------------------------------------
+
+move_group.setMaxVelocityScalingFactor();				 >> To set a scaling factor for optionally reducing the maximum joint velocity.
+move_group.computeCartesianPath() 						 >> To compute a Cartesian path that follows specified waypoints
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------Planning To Adding/Removing and Attaching/Detaching Objects-------
+
+						moveit_msgs::CollisionObject collision_object;
+						shape_msgs::SolidPrimitive primitive;
+
+planning_scene_interface.addCollisionObjects();         >> To add the collision object into the world
+move_group.attachObject();								>> To attach the collision object to the robot
+move_group.detachObject();								>> To detach the collision object from the robot
+planning_scene_interface.removeCollisionObjects();      >> To remove the collision object from the world
