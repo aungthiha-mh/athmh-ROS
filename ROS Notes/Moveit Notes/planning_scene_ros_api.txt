@@ -1,0 +1,49 @@
+
+--------------------------------------------Define the attached object message-----------------------------------------
+
+								moveit_msgs::AttachedCollisionObject attached_object;
+
+-----------------------------------------------Define a box to be attached---------------------------------------------
+
+								shape_msgs::SolidPrimitive primitive;
+
+attached_object.object.primitives.push_back(primitive);
+attached_object.object.primitive_poses.push_back(pose);
+
+__________________________________________________________________________________________________________________________________________________________________
+
+------------------------------------------Add an object into the environment--------------------------------------------
+
+								moveit_msgs::PlanningScene planning_scene;
+
+planning_scene.world.collision_objects.push_back(attached_object.object);
+
+___________________________________________________________________________________________________________________________________________________________________
+
+------------------------------------------Attach an object to the robot-------------------------------------------------
+
+									moveit_msgs::CollisionObject remove_object;
+
+planning_scene.world.collision_objects.clear();
+planning_scene.world.collision_objects.push_back(remove_object);
+planning_scene.robot_state.attached_collision_objects.push_back(attached_object);
+
+____________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------Detach an object from the robot-------------------------------------------------
+
+									moveit_msgs::AttachedCollisionObject detach_object;
+
+planning_scene.robot_state.attached_collision_objects.clear();
+planning_scene.robot_state.attached_collision_objects.push_back(detach_object);
+planning_scene.world.collision_objects.clear();
+planning_scene.world.collision_objects.push_back(attached_object.object);
+
+_____________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------Remove the object from the collision world--------------------------------------------
+
+
+planning_scene.robot_state.attached_collision_objects.clear();
+planning_scene.world.collision_objects.clear();
+planning_scene.world.collision_objects.push_back(remove_object);

@@ -1,0 +1,85 @@
+-----------------------------------------------Setup-------------------------------------------------
+
+						robot_model_loader::RobotModelLoader robot_model_loader;
+						robot_model::RobotModelPtr kinematic_model;
+						planning_scene::PlanningScene planning_scene;
+
+___________________________________________________________________________________________________________________________________________________________________________
+
+---------------------------<<<<<<<<<<<<<<Collision Checking>>>>>>>>>>>--------------------------------
+
+---------------------------------------Self-collision checking----------------------------------------
+
+						collision_detection::CollisionRequest collision_request;
+						collision_detection::CollisionResult collision_result;
+
+planning_scene.checkSelfCollision();								>> TO check whether the current state is in self collision
+
+____________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------------Change the state---------------------------------------------
+
+						robot_state::RobotState& current_state;
+
+planning_scene.getCurrentStateNonConst()      					    >> To get the state at which the robot is assumed to be
+current_state->setToRandomPositions()         					    >> To set all joints to random values. Values will be within default bounds
+collision_result.clear();										    >> To clear a previously stored result
+
+_____________________________________________________________________________________________________________________________________________________________________________
+
+---------------------------------------Checking for a group--------------------------------------------
+
+collision_request.group_name    								    >> The group name to check collisions for
+
+_____________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------Getting Contact Information-----------------------------------------
+
+collision_request.contacts 										    >> If true, compute contacts
+collision_request.max_contacts 										>> Overall maximum number of contacts to compute
+
+______________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------Allowed Collision Matrix---------------------------------------------
+
+						collision_detection::AllowedCollisionMatrix acm;
+						moveit::core::RobotState copied_state;
+
+planning_scene.getAllowedCollisionMatrix()						    >> Get the allowed collision matrix
+planning_scene.getCurrentState()								    >> To get the state at which the robot is assumed to be
+acm.setEntry() 													    >> To set an entry corresponding to a pair of elements
+
+_______________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------Full Collision Checking---------------------------------------------
+
+planning_scene.checkCollision()									   >> Check whether the current state is in collision, and updates the collision transforms of the current state before the computation
+
+________________________________________________________________________________________________________________________________________________________________________________
+
+---------------------------<<<<<<<<<<<<<<Constraint Checking>>>>>>>>>>>--------------------------------
+
+------------------------------------Checking Kinematic Constraints-------------------------------------
+
+						kinematic_constraints::KinematicConstraintSet kinematic_constraint_set;
+						kinematic_constraints::ConstraintEvaluationResult constraint_eval_result;
+
+joint_model_group->getLinkModelNames()							  >> To get the names of the links that are part of this joint group
+kinematic_constraints::constructGoalConstraints() 				  >> To generate a constraint message intended to be used as a goal constraint for a joint group
+copied_state.setToRandomPositions() 							  >> To set all joints to random values. Values will be within default bounds
+copied_state.update() 											  >> To update all transforms
+planning_scene.isStateConstrained()								  >> To check if a given state satisfies a set of constraints
+kinematic_constraint_set.add 									  >> To add all known constraints
+planning_scene.getTransforms() 									  >> To get the set of fixed transforms from known frames to the planning frame
+kinematic_constraint_set.decide() 			 					  >> To determines whether all constraints are satisfied by state, returning a single evaluation result
+
+_________________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------User-defined constraints---------------------------------------------
+
+						robot_state::RobotState& kinematic_state;
+
+kinematic_state.getJointPositions()								 >> To get positions of the joint
+planning_scene.setStateFeasibilityPredicate()					 >> To specify a predicate that decides whether states are considered valid or invalid
+planning_scene.isStateFeasible()								 >> To check if a given state is feasible
+planning_scene.isStateValid()									 >> To check if a given state is valid. This means checking for collisions and feasibility
