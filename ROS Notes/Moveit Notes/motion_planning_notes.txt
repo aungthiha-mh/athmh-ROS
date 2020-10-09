@@ -1,0 +1,57 @@
+--------------------------------------------------Start----------------------------------------------------
+
+							robot_model_loader::RobotModelLoader robot_model_loader;
+							moveit::core::RobotModelPtr& robot_model;
+							moveit::core::RobotStatePtr robot_state;
+							planning_scene::PlanningScenePtr planning_scene;
+							boost::scoped_ptr<pluginlib::ClassLoader<planning_interface::PlannerManager>> planner_plugin_loader;
+							planning_interface::PlannerManagerPtr planner_instance;
+
+robot_model_loader.getModel();										>> Get the constructed planning_models::RobotModel
+robot_state->getJointModelGroup()						      		>> To get robot model for a particular group
+planning_scene.getCurrentStateNonConst()      					    >> To get the state at which the robot is assumed to be
+
+_____________________________________________________________________________________________________________________________________________________________________
+
+---------------------------------------------Visualization-------------------------------------------------
+
+							moveit_visual_tools::MoveItVisualTools visual_tools;
+
+visual_tools.loadRobotStatePub();
+visual_tools.enableBatchPublishing();								>> Enable batch publishing - useful for when many markers need to be published at once and the ROS topic can get overloaded
+visual_tools.trigger();												>> To reduce the number of messages being sent to RViz for large visualizations
+visual_tools.prompt();                                  			>> To display the text on terminal prompt and to pay permission for program flow
+visual_tools.loadRemoteControl();     								>> An introspection tool that allows users to step through a high level script via buttons and keyboard shortcuts in RViz
+
+______________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------------Pose Goal-----------------------------------------------------
+
+							planning_interface::MotionPlanRequest req;
+							planning_interface::MotionPlanResponse res;
+							moveit_msgs::Constraints pose_goal;
+							planning_interface::PlanningContextPtr context;
+
+visual_tools.publishRobotState()								    >> To publish a MoveIt robot state to a topic that the Rviz "RobotState" display can show
+kinematic_constraints::constructGoalConstraints()					>> To generate a constraint message intended to be used as a goal constraint for a joint group
+req.goal_constraints.push_back(pose_goal);							>> To request a pose goal
+context->solve(res);												>> To call the planner
+planner_instance->getPlanningContext()								>> To construct a planning context that encapsulate the scene, the request and the response
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------------Visualize the result-------------------------------------------------
+
+							moveit_msgs::DisplayTrajectory display_trajectory;
+							moveit_msgs::MotionPlanResponse response;
+
+res.getMessage(response)										   >> To get response message
+visual_tools.publishTrajectoryLine();							   >> To display a line of the end effector path from a robot trajectory path
+
+_________________________________________________________________________________________________________________________________________________________________________
+
+-----------------------------------------Joint Space Goals-----------------------------------------------------
+
+							moveit::core::RobotState goal_state;
+
+kinematic_state->setJointGroupPositions()						  >> Given positions for the variables that make up a group, set those as the new values that correspond to the group
