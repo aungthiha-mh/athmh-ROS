@@ -1,0 +1,6 @@
+<All codes are same as motion_planning_notes.txt>
+
+							planning_pipeline::PlanningPipelinePtr planning_pipeline;
+
+planning_pipeline->generatePlan()									>> To call the motion planner plugin and the sequence of planning request adapters (if any)
+joint_model->getVariableBounds()								    >> To get the lower and upper bounds for a variable. Return false if the variable was not found
