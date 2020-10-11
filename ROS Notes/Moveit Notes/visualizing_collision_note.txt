@@ -1,0 +1,27 @@
+-------------------------------------------Initializing the Planning Scene and Markers---------------------------------------------
+
+									InteractiveRobot robot;
+									shapes::ShapePtr g_world_cube_shape;
+									planning_scene::PlanningScene* g_planning_scene;
+
+robot.getWorldGeometry()
+g_world_cube_shape.reset()
+g_planning_scene->getWorldNonConst()->addToObject()
+
+________________________________________________________________________________________________________________________________________________________________
+
+----------------------------------------Collision Requests and Checking for Collisions------------------------------------------------
+
+									collision_detection::CollisionRequest c_req;
+									collision_detection::CollisionResult c_res;
+
+g_planning_scene->checkCollision()
+
+_________________________________________________________________________________________________________________________________________________________________
+
+------------------------------------------Displaying Collision Contact Points---------------------------------------------------------
+
+									visualization_msgs::MarkerArray markers;
+
+c_res.contact_count;
+ollision_detection::getCollisionMarkersFromContacts()
