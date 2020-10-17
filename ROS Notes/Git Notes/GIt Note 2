@@ -1,0 +1,27 @@
+
+How to use meld tool
+
+1- Go to "https://sourceforge.net/projects/meld-installer/" and download exe
+2- Install this exe
+3- Go to this path "C:\Users\Aung Thiha\" and edit this file ".gitconfig"
+
+
+For Difftool
+
+[diff]
+	tool = meld
+[difftool "meld"]
+	path = C:/Program Files (x86)/Meld/meld/Meld.exe
+[difftool]
+	prompt = false
+
+____________________________________________________________________________________________________________________________________________
+
+For Merge
+
+[merge]
+	tool = meld
+[mergetool "meld"]
+	path = C:/Program Files (x86)/Meld/meld/Meld.exe
+[mergetool]
+	keepBackup = false

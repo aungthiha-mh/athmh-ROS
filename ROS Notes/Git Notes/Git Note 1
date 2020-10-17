@@ -1,0 +1,54 @@
+.gitignore (file)                                             - to ignore formats containing in this gitignore file
+
+________________________________________________________________________________________________________________________________________________________
+
+Git Commands
+
+git --version                                                 - to know version of git
+
+git config --global user.name                                 - to create git account (username)
+git config --global user.email                                - to create git account (email)
+git config --list                                             - to check information of git account
+
+git help <command>                                            - to get help of git commands
+git help add                                                  - to get help of add command
+git help commit                                               - to get help of commit command
+
+git clone <gitacc-url>                                        - to download git repository
+
+git init                                                      - initialize an existing directory as a Git repository
+git status                                                    - to get update of git account
+
+git log                                                       - show all commits in the current branch’s history
+
+git add <file>                                                - to add file to staging area
+git commit -m <"something">                                   - to save your changes to local repository
+git push                                                      - to push commit changes to remote server(local repository)
+
+git difftool HEAD                                             - to view difference between current and previous codes ( HEAD is the last commit)
+git difftool <HEAD~1> <HEAD~2>                                - to view difference between (HEAD-1 commit and HEAD-2 commit) previous two commits
+git difftool -t <tool-name>                                   - to open this tool respect to difftool
+
+git checkout -- <file>                                        - to undo changes your code(1 file) of repository of local computer
+git checkout .                                                - to undo changes your codes(all the files) of repository of local computer
+git revert <commit-ID>                                        - to undo commit changes of your code
+git reset --hard <commit-ID>                                  - to undo all the changes after this commit ID
+
+git branch                                                    - to print all the branches of your repository
+git branch <branch-name>                                      - to create new branch
+git checkout <branch-name>                                    - to active this branch (switched to this branch)
+git push --set-upstream origin <branch-name>                  - to add branch to your cloud github account
+
+git merge <branch-name> <active-branch>                       - to merge this branch into active branch
+git mergetool                                                 - to make marging
+
+git pull                                                      - get updated contents of github from internet
+
+
+
+
+
+
+
+
+
