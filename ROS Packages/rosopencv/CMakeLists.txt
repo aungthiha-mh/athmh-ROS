@@ -77,11 +77,11 @@ find_package(catkin REQUIRED COMPONENTS
  )
 
 ## Generate actions in the 'action' folder
- add_action_files(
-   FILES
+# add_action_files(
+#   FILES
 #   Action1.action
 #   Action2.action
- )
+# )
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
@@ -124,24 +124,24 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES rosopencv
-  CATKIN_DEPENDS 
-  actionlib 
-  actionlib_msgs 
-  cv_bridge 
-  dynamic_reconfigure 
-  geometry_msgs 
-  moveit_msgs 
-  nav_msgs 
-  roscpp 
-  rospy 
-  sensor_msgs 
-  std_msgs 
-  tf 
-  turtlesim
-  message_runtime
-  DEPENDS system_lib
+#  INCLUDE_DIRS include
+#  LIBRARIES rosopencv
+#  CATKIN_DEPENDS 
+#  actionlib 
+#  actionlib_msgs 
+#  cv_bridge 
+#  dynamic_reconfigure 
+#  geometry_msgs 
+#  moveit_msgs 
+#  nav_msgs 
+#  roscpp 
+#  rospy 
+#  sensor_msgs 
+#  std_msgs 
+#  tf 
+#  turtlesim
+#  message_runtime
+#  DEPENDS system_lib
 )
 
 ###########
