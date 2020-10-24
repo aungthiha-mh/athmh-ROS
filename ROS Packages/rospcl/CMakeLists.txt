@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(PCL REQUIRED)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -122,6 +122,8 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+include_directories(include ${PCL_INCLUDE_DIRS})
+link_directories(${PCL_INCLUDE_DIRS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -207,3 +209,30 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(pcl_create src/pcl_create.cpp)
+target_link_libraries(pcl_create ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_read src/pcl_read.cpp)
+target_link_libraries(pcl_read ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_write src/pcl_write.cpp)
+target_link_libraries(pcl_write ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_visualize src/pcl_visualize.cpp)
+target_link_libraries(pcl_visualize ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_filtering src/pcl_filtering.cpp)
+target_link_libraries(pcl_filtering ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_downsampling src/pcl_downsampling.cpp)
+target_link_libraries(pcl_downsampling ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_matching src/pcl_matching.cpp)
+target_link_libraries(pcl_matching ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_partition src/pcl_partition.cpp)
+target_link_libraries(pcl_partition ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(pcl_segmented src/pcl_segmented.cpp)
+target_link_libraries(pcl_segmented ${catkin_LIBRARIES} ${PCL_LIBRARIES})
