@@ -41,9 +41,13 @@ public:
     pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
     icp.setInputSource(cloud_in.makeShared());
     icp.setInputTarget(cloud_fixed.makeShared());
+    // Set the maximum distance threshold between two correspondent points in source <-> target. If the distance is larger than this threshold, the points will be ignored in the alignment process.
     icp.setMaxCorrespondenceDistance(5);
+    // Set the maximum number of iterations the internal optimization should run for.
     icp.setMaximumIterations(100);
+    // Set the transformation epsilon (maximum allowable difference between two consecutive transformations) in order for an optimization
     icp.setTransformationEpsilon (1e-12);
+    // Set the maximum allowed Euclidean error between two consecutive steps in the ICP loop, before the algorithm is considered to have converged.
     icp.setEuclideanFitnessEpsilon(0.1);
     icp.align(cloud_out);
 

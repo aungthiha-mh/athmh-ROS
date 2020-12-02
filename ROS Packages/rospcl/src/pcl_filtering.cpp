@@ -30,10 +30,14 @@ public:
 
     pcl::PointCloud<pcl::PointXYZ> cloud_filtered;
 
+    // To understand statistical outlier removal filer , watch these youtube links :
+    // https://www.youtube.com/watch?v=jbCxoUUQC3k&t=400s&fbclid=IwAR0ljLlArA-W5N6Fk4xqulWsp-HCS8Qilh2RgA79V6vQpzgPgIpcJSuWFF4
+    // https://www.mathsisfun.com/data/standard-deviation.html?fbclid=IwAR0NCI5DfFKallcCEt03zuWL1yPOqDhj0Z8_LHqT9srFikXV15Ybm1n84R8
+
     pcl::StatisticalOutlierRemoval<pcl::PointXYZ> statRemover;
     statRemover.setInputCloud(cloud.makeShared());
-    statRemover.setMeanK(10);
-    statRemover.setStddevMulThresh(0.2);
+    statRemover.setMeanK(10);                                                    // The number of neighbors to analyze for each point is set to 10
+    statRemover.setStddevMulThresh(0.2);                                         // the standard deviation multiplier
     statRemover.filter(cloud_filtered);
 
     sensor_msgs::PointCloud2 output;
